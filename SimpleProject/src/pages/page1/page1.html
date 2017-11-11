@@ -1,0 +1,43 @@
+﻿<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <div class="icon-menu">
+      <ion-icon name="menu"></ion-icon>
+    </div>
+    </button>
+    <ion-title> Wyślij Wiadomość</ion-title>
+  </ion-navbar>
+</ion-header>
+  <ion-content>
+        <h3> Aby wysłać wiadomość przyłóż tag NFC do telefonu.</h3>
+        <h5> Wiadomość</h5>
+      <label class="item item-input" name="textArea">
+        <textarea [(ngModel)]= "message" placeholder="Napisz wiadomość..." (change)="checkWord()">{{message}}</textarea>
+        <div contenteditable="true" ></div>
+      </label>
+      <div class="button">
+    <button ion-button button-positive button-block (click)="doRadio()"> Szablony</button>
+      </div>
+      <ion-item class="info">
+        <p> NFC tag ID: {{tagID}}</p>
+        <p> Decode Tag: {{decodeTag}}</p>
+        <p> Wiadomość: </p>
+        <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(newmessage)"> {{newmessage}}</p>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed> Adres Serwera: </ion-label>
+        <ion-input type="text" value="" [(ngModel)]= "adresSerwera">{{adresSerwera}}</ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label fixed> Port: </ion-label>
+        <ion-input type="text" value="" [(ngModel)]= "port">{{port}}</ion-input>
+      </ion-item>
+<!--
+      <div class="NFCon" *ngIf="isNFCisActive()">
+        <ion-icon name="checkmark-circle" > NFC włączone</ion-icon>
+      </div>
+      <div class="NFCoff" *ngIf="isNFCUnactive()">
+      <ion-icon name="close-circle"> NFC wyłączone</ion-icon>
+      </div>
+-->
+  </ion-content>

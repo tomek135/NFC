@@ -1,0 +1,267 @@
+﻿page-page1 {
+
+  font-family: 'Roboto',sans-serif;
+  $button-md-margin-top:	.4rem	;
+  $button-md-margin-end:	.2rem	;
+  $button-md-margin-bottom:	.4rem	;
+  $button-md-margin-start:	.2rem	;
+  $button-md-padding-top:	0	;
+  $button-md-padding-end:	1.1em	;
+  $button-md-padding-bottom	:$button-md-padding-top	;
+  $button-md-padding-start:	$button-md-padding-end	;
+  $button-md-border-radius:	2px	;
+  $button-md-font-size:	1.4rem	;
+  $button-md-font-weight:	500	;
+  $button-md-large-padding-top:	0	;
+  $button-md-large-padding-end: 1em	;
+  $button-md-large-padding-bottom	:$button-md-large-padding-top	;
+  $button-md-large-padding-start:	$button-md-large-padding-end	;
+  $button-md-large-font-size:	2rem	;
+  $button-md-small-padding-top:	0	;
+  $button-md-small-padding-end	:.9em	;
+  $button-md-small-padding-bottom	:$button-md-small-padding-top	;
+  $button-md-small-padding-start:	$button-md-small-padding-end	;
+  $button-md-small-font-size:	1.3rem	;
+
+textarea{
+  min-width: 100%;
+  box-sizing: border-box;
+  border: none;
+  resize: none;
+  font-weight: 400;
+}
+
+.button{
+  margin-top:  $button-md-margin-top;
+  margin-block-end:  $button-md-margin-end;
+  margin-bottom:  $button-md-margin-bottom;
+  margin-block-start:  $button-md-margin-start;
+  float: right;
+  font-weight: $button-md-font-weight;
+  border-radius: $button-md-border-radius;
+ }
+
+ h3{
+  text-align: left;
+  opacity: 0.87;
+  font-weight: 400;
+  color: rgb(0, 0, 0);
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 8px;
+ }
+
+ h5 {
+  text-align: left;
+  opacity: 0.54;
+  color: rgb(0, 0, 0);
+  font-weight: 400;
+  padding-left: 16px;
+}
+
+.info{
+  text-align: left;
+  color: rgb(0, 0, 0);
+  font-weight: 400;
+  font-size: 14px;
+}
+
+textarea.placeholder{
+  text-align: left;
+  padding-left :0px;
+  opacity: 0.54;
+}
+
+.toolbar-background {
+  background-color: #2196F3;
+}
+
+.icon-menu{
+  color: white;
+}
+
+@media  (max-width: 359px){
+    h3 {
+      font-size: 16px;
+    }
+
+    textarea {
+      padding-left: 16px;
+      font-weight: 400;
+      font-size: 16px;
+      padding-right: 16px;
+      padding-top: 8px;
+      min-height: 150px;
+      max-width: 359px;
+    }
+
+    .button{
+      padding-left: $button-md-small-padding-start;
+      padding-right: $button-md-small-padding-end	;
+      padding-top: $button-md-small-padding-top	;
+      padding-bottom: $button-md-small-padding-bottom;
+      font-size: $button-md-small-font-size	;  
+    }
+
+    h5 {
+      font-size: 14px;
+    }
+  }
+
+
+@media  (min-width: 360px) and (max-width: 575px) {
+    h3 {
+      font-size: 18px;
+    }
+
+    textarea {
+      padding-left: 16px;
+      font-weight: 400;
+      font-size: 18px;
+      padding-right: 16px;
+      padding-top: 8px;
+      min-height: 150px;
+      max-width: 575px;
+    }
+    .button{
+      padding-left: $button-md-small-padding-start;
+      padding-right: $button-md-small-padding-end	;
+      padding-top: $button-md-small-padding-top	;
+      padding-bottom: $button-md-small-padding-bottom;
+      font-size: $button-md-small-font-size	;
+     }
+
+    h5 {
+      font-size: 16px;
+    }
+  }
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) and (max-width: 767px) {
+  textarea {
+    padding-left: 16px;
+    font-weight: 400;
+    font-size: 20px;
+    padding-right: 16px;
+    padding-top: 16px;
+    min-height: 150px;
+    max-width: 767px;
+  }
+
+  h3 {
+    font-size: 20px;
+  }
+
+  .button{
+    padding-left: $button-md-padding-start;
+    padding-right: $button-md-padding-end	;
+    padding-top: $button-md-padding-top	;
+    padding-bottom: $button-md-padding-bottom;
+    font-size: $button-md-font-size	;
+   }
+
+  h5 {
+    font-size: 18px;
+  }
+
+ }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) and (max-width: 991px) { 
+  textarea {
+    padding-left: 16px;
+    font-weight: 400;
+    font-size: 22px;
+    padding-right: 16px;
+    padding-top: 16px;
+    min-height: 200px;
+    max-width: 991px;
+  }
+  h3 {
+    font-size: 22px;
+  }
+
+  .button{
+    padding-left: $button-md-padding-start;
+    padding-right: $button-md-padding-end	;
+    padding-top: $button-md-padding-top	;
+    padding-bottom: $button-md-padding-bottom;
+    font-size: $button-md-font-size	;
+   }
+
+  h5 {
+    font-size: 20px;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) and (max-width: 1199px) { 
+
+  textarea {
+    padding-left: 16px;
+    font-weight: 400;
+    font-size: 24px;
+    padding-right: 16px;
+    padding-top: 16px;
+    min-height: 250px;
+    max-width: 1199px;
+    
+  }
+
+  h3 {
+    font-size: 24px;
+  }
+
+  .button{
+    padding-left: $button-md-padding-start;
+    padding-right: $button-md-padding-end	;
+    padding-top: $button-md-padding-top	;
+    padding-bottom: $button-md-padding-bottom;
+    font-size: $button-md-font-size	;
+   }
+
+  h5 {
+    font-size: 22px;
+  }
+ }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
+
+  textarea {
+    padding-left: 16px;
+    font-size: 26px;
+    padding-right: 16px;
+    width: 100%;
+    padding-top: 16px;
+    min-height: 300px;
+  }
+
+  h3 {
+    font-size: 26px;
+  }
+
+  .button{
+    padding-left: $button-md-large-padding-start;
+    padding-right: $button-md-large-padding-end	;
+    padding-top: $button-md-large-padding-top	;
+    padding-bottom: $button-md-large-padding-bottom;
+    font-size: $button-md-large-font-size	;
+   }
+
+  h5 {
+    font-size: 24px;
+  }
+ }
+
+  .NFCon{
+    text-align: center;
+    color: green;
+  }
+
+  .NFCoff{
+    text-align: center;
+    color: red;
+  }
+
+}

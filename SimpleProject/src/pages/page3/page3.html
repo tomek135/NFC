@@ -1,0 +1,25 @@
+﻿<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Szablony</ion-title>
+  </ion-navbar>
+</ion-header>
+ 
+  <ion-content padding="true" class="has-header">
+   <!-- <table>
+      <tr *ngFor='let template of templates'>
+        <td> {{template.templateName}}</td>
+        </tr>
+      </table> -->
+
+  <ion-list>
+    <button ion-item *ngFor="let template of templates" (click)="itemSelected(template.template)" > {{ template.template }} </button>
+  </ion-list>
+
+ <!-- <button ion-button button-positive button-block (click)="addTemplate"> Dodaj szablon</button> -->
+ <div class="NFCon" *ngIf="isNoTemplates();">
+       <h3>Nie można pobrać danych z serwera. </h3>
+      </div>
+  </ion-content>

@@ -1,0 +1,56 @@
+{
+  "name": "io.cordova.myapp1781f8",
+  "version": "1.0.0",
+  "author": "",
+  "homepage": "",
+  "private": true,
+  "scripts": {
+    "clean": "ionic-app-scripts clean",
+    "build": "ionic-app-scripts build",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve",
+    "watch": "ionic-app-scripts watch"
+  },
+  "dependencies": {
+    "@angular/common": "2.2.1",
+    "@angular/compiler": "2.2.1",
+    "@angular/compiler-cli": "2.2.1",
+    "@angular/core": "2.2.1",
+    "@angular/forms": "2.2.1",
+    "@angular/http": "2.2.1",
+    "@angular/platform-browser": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/platform-server": "2.2.1",
+    "@ionic-native/android-permissions": "^4.3.1",
+    "@ionic-native/http": "^4.3.2",
+    "@ionic-native/nfc": "^3.10.3",
+    "@ionic-native/status-bar": "^4.3.3",
+    "@ionic/storage": "1.1.7",
+    "ionic-angular": "2.0.1",
+    "ionic-native": "2.4.1",
+    "ionicons": "3.0.0",
+    "rxjs": "5.0.0-beta.12",
+    "sw-toolbox": "3.4.0",
+    "zone.js": "0.6.26"
+  },
+  "devDependencies": {
+    "@ionic/app-scripts": "1.1.0",
+    "@ionic/cli-plugin-cordova": "1.3.0",
+    "@ionic/cli-plugin-ionic-angular": "1.3.0",
+    "typescript": "2.0.9"
+  },
+  "cordovaPlugins": [
+    "cordova-plugin-whitelist",
+    "cordova-plugin-console",
+    "cordova-plugin-statusbar",
+    "cordova-plugin-device",
+    "cordova-plugin-splashscreen",
+    "ionic-plugin-keyboard"
+  ],
+  "cordovaPlatforms": [],
+  "-vs-binding": {
+    "BeforeBuild": [
+      "ionic:build"
+    ]
+  }
+}
