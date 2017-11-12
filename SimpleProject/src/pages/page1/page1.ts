@@ -38,16 +38,9 @@ export class Page1 {
 
 
     constructor(public alertCtrl: AlertController, private NFC: NFC, private ndef: Ndef, public http: Http ,public sanitizer: DomSanitizer) {
-        
 
-        //Sprawdzenie czy NFC jest włączone w telefonie
-        this.NFC.enabled().then(()=>{
             this.listenNFC();
-            this.isNFCActive = true;
-        })
-        .catch(err=>{
-            this.showConfirm();
-        });
+
 
     }
 

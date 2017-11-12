@@ -1,7 +1,8 @@
 ﻿import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { AlertController} from 'ionic-angular';
-import { StatusBar, Splashscreen,NFC,Ndef,Device} from 'ionic-native';
+import { StatusBar, Splashscreen,Device} from 'ionic-native';
+import { NFC, Ndef } from '@ionic-native/nfc';
 //import { StartPage } from '../pages/startPage/startPage';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
@@ -24,7 +25,8 @@ export class Safe {
 }
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.html',
+  providers: [NFC,Ndef]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
@@ -34,7 +36,7 @@ export class MyApp {
   confirmAlert;
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public alertCtrl: AlertController) {
+  constructor(public platform: Platform, public alertCtrl: AlertController, public NFC: NFC,public ndef: Ndef) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -56,6 +58,10 @@ export class MyApp {
       StatusBar.show();
       Splashscreen.hide();
       this.showedAlert = false;
+      if(!this.NFC.enabled())
+      {
+        this.showConfirm();
+      }
     
 
     //Confirm exit
@@ -98,6 +104,27 @@ export class MyApp {
 
     });
     this.confirmAlert.present();
+  }
+
+  showConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'NFC nie jest włączone.',
+      message: 'Aby korzystać z aplikacji konieczne jest włączenie NFC w telefonie. Czy chcesz włączyć?',
+      buttons: [
+        {
+          text: 'Zamknij',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Włącz',
+          handler: () => {
+            this.NFC.showSettings();
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   openPage(page) {
