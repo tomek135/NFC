@@ -7,19 +7,28 @@
   </ion-navbar>
 </ion-header>
  
-  <ion-content padding="true" class="has-header">
-   <!-- <table>
-      <tr *ngFor='let template of templates'>
-        <td> {{template.templateName}}</td>
-        </tr>
-      </table> -->
-
-  <ion-list>
-    <button ion-item *ngFor="let template of templates" (click)="itemSelected(template.template)" > {{ template.template }} </button>
+<ion-content padding="true" class="has-header">
+<div *ngIf="!isNoTemplates();">
+  <ion-list radio-group [(ngModel)]= "selectTemplate">
+    <ion-list-header>
+      Wybierz odpowiedni szablon
+    </ion-list-header>
+    <ion-item *ngFor="let template of jsonobject">  
+      <ion-label value="template.template">{{template.template}}</ion-label>
+      <ion-radio item-left></ion-radio>
+      <ion-select  (change)="showSelectValue(mySelect)" interface="popover">
+        <ion-option  *ngFor="let value of template.select">{{value.value}}</ion-option>
+      </ion-select>
+      <ion-select *ngIf="template.add!=null" (change)="showSelectValue(mySelect)" interface="popover">
+          <ion-option  *ngFor="let value of template.add" >{{value.value}}</ion-option>
+      </ion-select>
+    </ion-item>
   </ion-list>
+  <button ion-button navPop (click)="przekazwiadomosc()">Ok</button>
+</div>
 
- <!-- <button ion-button button-positive button-block (click)="addTemplate"> Dodaj szablon</button> -->
  <div class="NFCon" *ngIf="isNoTemplates();">
        <h3>Nie można pobrać danych z serwera. </h3>
+       <button ion-button navPop>Cofnij</button>
       </div>
   </ion-content>

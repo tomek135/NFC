@@ -1,6 +1,8 @@
 ﻿import { NgModule, ErrorHandler, Component } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { BrowserModule } from '@angular/platform-browser';
 import { NFC, Ndef } from '@ionic-native/nfc';
+import { HttpModule} from '@angular/http';
 import { Headers } from '@angular/http';
 import { MyApp } from './app.component';
 import { StatusBar} from 'ionic-native';
@@ -17,6 +19,8 @@ import { Page3 } from '../pages/page3/page3';
     Page3
   ],
   imports: [
+    BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],

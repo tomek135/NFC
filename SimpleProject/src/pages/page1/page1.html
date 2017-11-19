@@ -16,7 +16,8 @@
         <div contenteditable="true" ></div>
       </label>
       <div class="button">
-    <button ion-button button-positive button-block (click)="doRadio()"> Szablony</button>
+    <!--<button ion-button button-positive button-block (click)="doRadio()"> Szablony</button>-->
+    <button ion-button [navPush]="pushPage">Szablony</button>
       </div>
       <ion-item class="info">
         <p> NFC tag ID: {{tagID}}</p>

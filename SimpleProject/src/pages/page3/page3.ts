@@ -12,31 +12,61 @@ export class Page3 {
     this.getTemplates();
     }
   showEdition: boolean = false;
-  templates: any;
+  templates: string[][];
   isNoTemplate: boolean = false;
+  data: string;
+  selectTemplate: string;
+  SelectedValue: string;
+  jsonobject: any;
 
     getTemplates(){
-      this.http.get('http://192.168.0.101:8080/templates.json')
+      this.http.get('http://192.168.0.101:3000/templates.json')
       .timeout(3000)
       .map(res => res.text())
       .subscribe(dataTemplate =>{
-          this.templates = JSON.parse(dataTemplate.toString());
+        this.jsonobject = JSON.parse(dataTemplate.toString());
           this.isNoTemplate = false;
+          //this.showSelectItems();
     }, (err)=>{
      this.showAlert("Nie udało się pobrać danych z serwera",err);
      this.isNoTemplate = true;
       });
   }
 
+    showSelectItems(){
+      this.templates = new Array(this.jsonobject.length);
+     console.log("dlugosc :" +this.jsonobject.length);
+     for(var i = 0; i < this.jsonobject.length; i++) {
+         var obj = this.jsonobject[i].select;
+         console.log("dlugosc obiektu :" +obj.length);
+         this.templates[i] = new Array(obj.length);
+          for(var j =0; j< obj.length;j++){
+            this.templates[i][j] = obj[j].value;
+          console.log("wartosc : "+obj[j].value);
+          
+         }
+        }
+    }
+
+
+    przekazwiadomosc(){
+      console.log("AAA: "+ this.selectTemplate);
+    }
+
+
     isNoTemplates(){
       return this.isNoTemplate;
     }
 
-    itemSelected(templateName: string) {
+    showSelectValue(SelectedValue){
+      console.log("A "+ SelectedValue);
+    }
 
+    itemSelected(templateName: string) {
+    
     this.showEdition = true;
     console.log("Selected Item", templateName);
-    let alert = this.alertCtrl.create({
+    /*let alert = this.alertCtrl.create({
     title: 'Edition',
     inputs: [
       {
@@ -61,12 +91,11 @@ export class Page3 {
       }
     ]
   });
-  alert.present();
+  alert.present();*/
 
   }
 
   sendChangeToServer(){
-
   }
 
   showAlert(title: string, subTitle: string) {

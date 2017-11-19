@@ -9,6 +9,7 @@ import { timeout} from 'rxjs/operator/timeout';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/timeout';
+import { Page3 } from '../page3/page3';
 
 @Component({
     selector: 'page-page1',
@@ -35,12 +36,12 @@ export class Page1 {
     public adresSerwera: string;
     public port: number;
     isAlert: boolean = false;
-
+    pushPage : any;
 
     constructor(public alertCtrl: AlertController, private NFC: NFC, private ndef: Ndef, public http: Http ,public sanitizer: DomSanitizer) {
 
-            this.listenNFC();
-
+            //this.listenNFC();
+            this.pushPage = Page3;
 
     }
 
