@@ -3,13 +3,14 @@ import { NFC, Ndef } from '@ionic-native/nfc';
 import { Http} from '@angular/http';
 import { Device } from '@ionic-native';
 import { Headers } from '@angular/http';
-import { AlertController } from 'ionic-angular';
+import { AlertController, NavController } from 'ionic-angular';
 import { map } from 'rxjs/operator/map';
 import { timeout} from 'rxjs/operator/timeout';
 import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/timeout';
 import { Page3 } from '../page3/page3';
+import { TestProvider} from '../testProvider/TestProvider';
 
 @Component({
     selector: 'page-page1',
@@ -37,17 +38,24 @@ export class Page1 {
     public port: number;
     isAlert: boolean = false;
     pushPage : any;
+    
 
-    constructor(public alertCtrl: AlertController, private NFC: NFC, private ndef: Ndef, public http: Http ,public sanitizer: DomSanitizer) {
+    constructor(public alertCtrl: AlertController,public navCtrl: NavController, private NFC: NFC, private ndef: Ndef, public http: Http ,public sanitizer: DomSanitizer, public testProvider: TestProvider) {
+            this.listenNFC();
+    }
 
-            //this.listenNFC();
-            this.pushPage = Page3;
+    changeMessage(){
+        this.testProvider.setMessage(this.message);
+    }
 
+    wybierzSzablon(){
+        console.log("dddd");
+        this.navCtrl.push(Page3);
     }
 
     checkWord(){
         var liczbaslow : number = 0;
-        var liczbaslowtablica :any  = this.message.split(" ");
+        var liczbaslowtablica :any  = this.testProvider.message.split(" ");
         this.newmessage = "";
         for (var i =0 ; i<liczbaslowtablica.length;i++){
             if(liczbaslowtablica[i]=="w")
@@ -107,7 +115,7 @@ export class Page1 {
                 headers.append('Content-Type', 'application/json');
 
                 let dataToSend ={
-                    message: this.message
+                    message: this.testProvider.message
                 };
 
                 if(!this.isAlert)//zeby nie wysyłać wiadomosci kiedy jest wyswietlone powiadomienie
@@ -174,7 +182,7 @@ export class Page1 {
                         handler: data => {
                             this.testRadioOpen = false;
                             this.testRadioResult = data;
-                            this.message = data;
+                            this.testProvider.message = data;
                         }
                     });
             

@@ -2,22 +2,28 @@
 import { AlertController } from 'ionic-angular';
 import { NavController, NavParams } from 'ionic-angular';
 import { Http} from '@angular/http';
-
+import { Page1 } from '../page1/page1';
+import {TestProvider} from '../testProvider/TestProvider';
 @Component({
   selector: 'page-page3',
   templateUrl: 'page3.html',
 })
 export class Page3 {
-  constructor(public alertCtrl: AlertController, public http: Http) {
+  constructor(public alertCtrl: AlertController, public http: Http, public navParams: NavParams, public navController: NavController, public testProvider: TestProvider) {
     this.getTemplates();
     }
   showEdition: boolean = false;
   templates: string[][];
   isNoTemplate: boolean = false;
   data: string;
-  selectTemplate: string;
+  public selectTemplate: string;
+  public selectOption: string;
+  public selectOptionAdd: string;
+  public allMessage: string;
   SelectedValue: string;
   jsonobject: any;
+  callback;
+
 
     getTemplates(){
       this.http.get('http://192.168.0.101:3000/templates.json')
@@ -49,9 +55,14 @@ export class Page3 {
     }
 
 
-    przekazwiadomosc(){
-      console.log("AAA: "+ this.selectTemplate);
+    przekazwiadomosc(callback){
+     this.allMessage = isDefined(this.selectTemplate)+isDefined(this.selectOption)+isDefined(this.selectOptionAdd);
+      console.log("Wiadomość "+ this.allMessage);
+
+      this.testProvider.setMessage(this.allMessage);
+      this.navController.pop();
     }
+
 
 
     isNoTemplates(){
@@ -106,4 +117,11 @@ export class Page3 {
     });
     alert.present();
   }
+
+}
+function isDefined(variable: string ){
+  if(variable != undefined)
+  return variable+" ";
+  else
+  return "";
 }

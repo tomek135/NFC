@@ -12,12 +12,12 @@
         <h3> Aby wysłać wiadomość przyłóż tag NFC do telefonu.</h3>
         <h5> Wiadomość</h5>
       <label class="item item-input" name="textArea">
-        <textarea [(ngModel)]= "message" placeholder="Napisz wiadomość..." (change)="checkWord()">{{message}}</textarea>
+        <textarea [(ngModel)]= "testProvider.message" placeholder="Napisz wiadomość..." (change)="checkWord()">{{testProvider.message}}</textarea>
         <div contenteditable="true" ></div>
       </label>
       <div class="button">
     <!--<button ion-button button-positive button-block (click)="doRadio()"> Szablony</button>-->
-    <button ion-button [navPush]="pushPage">Szablony</button>
+    <button ion-button (click) = "wybierzSzablon()">Szablony</button>
       </div>
       <ion-item class="info">
         <p> NFC tag ID: {{tagID}}</p>

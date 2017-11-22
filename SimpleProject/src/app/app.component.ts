@@ -3,12 +3,12 @@ import { Nav, Platform } from 'ionic-angular';
 import { AlertController} from 'ionic-angular';
 import { StatusBar, Splashscreen,Device} from 'ionic-native';
 import { NFC, Ndef } from '@ionic-native/nfc';
-//import { StartPage } from '../pages/startPage/startPage';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 import { Page3 } from '../pages/page3/page3';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import {TestProvider} from '../pages/testProvider/TestProvider';
 
 
 @Pipe({name: 'safeHtml'})
@@ -26,7 +26,7 @@ export class Safe {
 
 @Component({
   templateUrl: 'app.html',
-  providers: [NFC,Ndef]
+  providers: [NFC,Ndef,TestProvider]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
@@ -130,6 +130,6 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(page.component,[TestProvider]);
   }
 }

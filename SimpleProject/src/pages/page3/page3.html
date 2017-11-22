@@ -15,16 +15,16 @@
     </ion-list-header>
     <ion-item *ngFor="let template of jsonobject">  
       <ion-label value="template.template">{{template.template}}</ion-label>
-      <ion-radio item-left></ion-radio>
-      <ion-select  (change)="showSelectValue(mySelect)" interface="popover">
-        <ion-option  *ngFor="let value of template.select">{{value.value}}</ion-option>
+      <ion-radio item-left value="{{template.template}}" ></ion-radio>
+      <ion-select  (change)="showSelectValue(mySelect)" interface="popover" [(ngModel)]= "selectOption" >
+        <ion-option  *ngFor="let value of template.select" value ="{{value.value}}">{{value.value}}</ion-option>
       </ion-select>
-      <ion-select *ngIf="template.add!=null" (change)="showSelectValue(mySelect)" interface="popover">
-          <ion-option  *ngFor="let value of template.add" >{{value.value}}</ion-option>
+      <ion-select *ngIf="template.add!=null" (change)="showSelectValue(mySelect)" interface="popover" [(ngModel)]= "selectOptionAdd" >
+          <ion-option  *ngFor="let value of template.add" value ="{{value.value}}" >{{value.value}}</ion-option>
       </ion-select>
     </ion-item>
   </ion-list>
-  <button ion-button navPop (click)="przekazwiadomosc()">Ok</button>
+  <button ion-button (click)="przekazwiadomosc()"> Ok </button>
 </div>
 
  <div class="NFCon" *ngIf="isNoTemplates();">
