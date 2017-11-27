@@ -34,14 +34,12 @@ export class Page1 {
     public status: string;
     templates: any;
     public temp: string;
-    public adresSerwera: string;
-    public port: number;
     isAlert: boolean = false;
     pushPage : any;
     
 
-    constructor(public alertCtrl: AlertController,public navCtrl: NavController, private NFC: NFC, private ndef: Ndef, public http: Http ,public sanitizer: DomSanitizer, public testProvider: TestProvider) {
-            this.listenNFC();
+    constructor(public alertCtrl: AlertController,public navCtrl: NavController, private NFC: NFC, private ndef: Ndef, public http: Http ,public sanitizer: DomSanitizer, public testProvider: TestProvider) { 
+        this.listenNFC();
     }
 
     changeMessage(){
@@ -97,6 +95,7 @@ export class Page1 {
 
     listenNFC(){
         //Funkcja wywolująca sie gdy przyłożymy tag do telefonu
+        this.testProvider.onInit =true;
         this.NFC.addNdefListener(() => {
             console.log("Tag wykryty");
             this.isNFCActive = true;
@@ -120,7 +119,7 @@ export class Page1 {
 
                 if(!this.isAlert)//zeby nie wysyłać wiadomosci kiedy jest wyswietlone powiadomienie
                 {
-                 this.http.post('http://'+this.adresSerwera+':'+this.port,JSON.stringify(dataToSend), {headers: headers})
+                 this.http.post('http://'+this.testProvider.adresServera+':'+this.testProvider.port,JSON.stringify(dataToSend), {headers: headers})
                  .map(res => res.text())
                  .subscribe(data => {
                         this.showAlert('Powiadomienie',data);
@@ -148,7 +147,7 @@ export class Page1 {
     doRadio() { 
         if(!this.isAlert)
         {
-            this.http.get('http://'+this.adresSerwera+':'+this.port+'/templates.json')
+            this.http.get('http://'+this.testProvider.adresServera+':'+this.testProvider.port+'/templates.json')
                 .timeout(3000)
                 .map(res => res.text())
                 .subscribe(dataTemplate =>{

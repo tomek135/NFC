@@ -4,6 +4,9 @@ import { Injectable } from '@angular/core';
 export class TestProvider {
 
  public message: any = "";
+ public adresServera: string;
+ public port: number; 
+ public onInit: boolean = false;
 
  constructor() {
 

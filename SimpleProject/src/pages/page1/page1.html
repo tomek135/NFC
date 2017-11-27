@@ -1,4 +1,4 @@
-﻿<ion-header>
+﻿<ion-header >
   <ion-navbar>
     <button ion-button menuToggle>
       <div class="icon-menu">
@@ -8,7 +8,7 @@
     <ion-title> Wyślij Wiadomość</ion-title>
   </ion-navbar>
 </ion-header>
-  <ion-content>
+  <ion-content ngInit="listenNFC()">
         <h3> Aby wysłać wiadomość przyłóż tag NFC do telefonu.</h3>
         <h5> Wiadomość</h5>
       <label class="item item-input" name="textArea">
@@ -27,11 +27,11 @@
       </ion-item>
       <ion-item>
         <ion-label fixed> Adres Serwera: </ion-label>
-        <ion-input type="text" value="" [(ngModel)]= "adresSerwera">{{adresSerwera}}</ion-input>
+        <ion-input type="text" value="" [(ngModel)]= "testProvider.adresServera">{{testProvider.adresServera}}</ion-input>
       </ion-item>
       <ion-item>
         <ion-label fixed> Port: </ion-label>
-        <ion-input type="text" value="" [(ngModel)]= "port">{{port}}</ion-input>
+        <ion-input type="text" value="" [(ngModel)]= "testProvider.port">{{testProvider.port}}</ion-input>
       </ion-item>
 <!--
       <div class="NFCon" *ngIf="isNFCisActive()">

@@ -20,4 +20,47 @@
   .icon{
     color: white;
   }
+
+  @media  (max-width: 359px){
+
+    p{
+      font-size: 16px;
+    }
+  }
+      
+      
+      @media  (min-width: 360px) and (max-width: 575px) {
+        p{
+          font-size: 18px;
+        }
+      }
+      
+      // Small devices (landscape phones, 576px and up)
+      @media (min-width: 576px) and (max-width: 767px) {
+        p{
+          font-size: 20px;
+        }
+       }
+      
+      // Medium devices (tablets, 768px and up)
+      @media (min-width: 768px) and (max-width: 991px) { 
+        p{
+          font-size: 22px;
+        }
+      }
+      
+      // Large devices (desktops, 992px and up)
+      @media (min-width: 992px) and (max-width: 1199px) {
+        p{
+          font-size: 24px;
+        }
+       }
+      
+      // Extra large devices (large desktops, 1200px and up)
+      @media (min-width: 1200px) {
+        p{
+          font-size: 26px;
+        }
+       }
+
 }

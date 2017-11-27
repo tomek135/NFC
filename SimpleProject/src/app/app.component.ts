@@ -5,7 +5,7 @@ import { StatusBar, Splashscreen,Device} from 'ionic-native';
 import { NFC, Ndef } from '@ionic-native/nfc';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
-import { Page3 } from '../pages/page3/page3';
+//import { Page3 } from '../pages/page3/page3';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import {TestProvider} from '../pages/testProvider/TestProvider';
@@ -39,13 +39,15 @@ export class MyApp {
   constructor(public platform: Platform, public alertCtrl: AlertController, public NFC: NFC,public ndef: Ndef) {
     this.initializeApp();
 
+
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Wyślij wiadomość', component: Page1 },
-      { title: 'O aplikacji', component: Page2 },
-      { title: 'Szablony', component: Page3 }
+      { title: 'O aplikacji', component: Page2 }
+     // { title: 'Szablony', component: Page3 }
     ];
 
+    
   }
 
   initializeApp() {
