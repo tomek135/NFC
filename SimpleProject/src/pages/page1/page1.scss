@@ -76,6 +76,10 @@ textarea.placeholder{
   background-color: #2196F3;
 }
 
+ion-label[fixed] {
+  min-width: 110px;
+}
+
 .icon-menu{
   color: white;
 }

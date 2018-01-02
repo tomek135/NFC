@@ -23,19 +23,10 @@
     $button-md-small-padding-start:	$button-md-small-padding-end	;
     $button-md-small-font-size:	1.3rem	;
 
-    $list-md-margin-top:	16px	;
-    $list-md-margin-end:	$list-md-margin-right	;
-    $list-md-margin-bottom:	16px	;
-    $list-md-margin-start:	$list-md-margin-left	;
-    $list-inset-md-margin-top:	16px	;
-    $list-inset-md-margin-end:	$list-inset-md-margin-right	;
-    $list-inset-md-margin-bottom:	16px	;
-    $list-inset-md-margin-start:	$list-inset-md-margin-left	;
     $list-inset-md-border-radius:	2px	;
     $list-md-header-margin-bottom:	13px	;
     $list-md-header-padding-start:	$list-md-header-padding-left	;
     $list-md-header-min-height:	4.5rem	;
-    $list-md-header-border-top:	1px solid $list-md-border-color	;
     $list-md-header-font-size:	1.4rem	;
     $list-md-header-color:	#757575	;
   
@@ -60,7 +51,7 @@
     font-weight: $button-md-font-weight;
     border-radius: $button-md-border-radius;
    }
-  
+
    h3{
     text-align: left;
     opacity: 0.87;
@@ -82,9 +73,10 @@
     background-color: #2196F3;
   }
   
-  .icon-menu{
+  .bar-button-default-md, .bar-button-clear-md-default, .bar-button-md-default {
     color: white;
-  }
+}
+
 
   
   @media  (max-width: 359px){
@@ -101,37 +93,64 @@
     h3 {
       font-size: 16px;
     }
-      .button{
-        padding-left: $button-md-small-padding-start;
-        padding-right: $button-md-small-padding-end	;
-        padding-top: $button-md-small-padding-top	;
-        padding-bottom: $button-md-small-padding-bottom;
-        font-size: $button-md-small-font-size	;  
-      }
-  
 
+    .button{
+      padding-left: $button-md-small-padding-start;
+      padding-right: $button-md-small-padding-end	;
+      padding-top: $button-md-small-padding-top	;
+      padding-bottom: $button-md-small-padding-bottom;
+      font-size: $button-md-small-font-size	;  
     }
+
+    .select-md {
+      padding: 1px 4px 1px 4px;
+    }
+    .label-md {
+      margin: 13px 4px 13px 0;
+    }
+
+    .item-md .radio-md[item-left]{
+      margin: 11px 16px 10px 0px;
+    }
+    
+    .item-md {
+      padding-left: 8px;
+    }
+    
+    .list-header-md {
+      padding-left: 8px;
+      margin-bottom: 13px;
+    }
+}
   
   
   @media  (min-width: 360px) and (max-width: 575px) {
     ion-label{
-      font-size: 18px;
+      font-size: 16px;
     }
 
     ion-select{
-      font-size: 18px;
+      font-size: 16px;
     }
 
     h3 {
       font-size: 18px;
     }
-      .button{
-        padding-left: $button-md-small-padding-start;
-        padding-right: $button-md-small-padding-end	;
-        padding-top: $button-md-small-padding-top	;
-        padding-bottom: $button-md-small-padding-bottom;
-        font-size: $button-md-small-font-size	;
-       }
+    .button{
+      padding-left: $button-md-small-padding-start;
+      padding-right: $button-md-small-padding-end	;
+      padding-top: $button-md-small-padding-top	;
+      padding-bottom: $button-md-small-padding-bottom;
+      font-size: $button-md-small-font-size	;
+      }
+
+      .select-md {
+      padding: 1px 8px 1px 8px;
+    }
+
+    .item-md .radio-md[item-left]{
+      margin: 11px 26px 10px 0px;
+    }
   
     }
   
@@ -154,6 +173,8 @@
       padding-bottom: $button-md-padding-bottom;
       font-size: $button-md-font-size	;
      }
+
+
   
   
    }

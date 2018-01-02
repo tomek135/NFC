@@ -1,7 +1,8 @@
 ﻿import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { AlertController} from 'ionic-angular';
-import { StatusBar, Splashscreen,Device} from 'ionic-native';
+import { Splashscreen} from 'ionic-native';
+import { StatusBar} from '@ionic-native/status-bar';
 import { NFC, Ndef } from '@ionic-native/nfc';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
@@ -11,22 +12,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import {TestProvider} from '../pages/testProvider/TestProvider';
 
 
-@Pipe({name: 'safeHtml'})
-export class Safe {
-  constructor(private sanitizer:DomSanitizer){}
-
-  transform(style) {
-    return this.sanitizer.bypassSecurityTrustStyle(style);
-    //return this.sanitizer.bypassSecurityTrustHtml(html);
-    // return this.sanitizer.bypassSecurityTrustScript(value);
-    // return this.sanitizer.bypassSecurityTrustUrl(value);
-    // return this.sanitizer.bypassSecurityTrustResourceUrl(value);
-  }
-}
-
 @Component({
   templateUrl: 'app.html',
-  providers: [NFC,Ndef,TestProvider]
+  providers: [NFC,Ndef,TestProvider,StatusBar]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
@@ -34,9 +22,10 @@ export class MyApp {
   rootPage: any = Page1;
   showedAlert: boolean;
   confirmAlert;
+  versja: number;
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public alertCtrl: AlertController, public NFC: NFC,public ndef: Ndef) {
+  constructor(public platform: Platform, public alertCtrl: AlertController, public NFC: NFC,public ndef: Ndef,private statusBar: StatusBar) {
     this.initializeApp();
 
 
@@ -54,12 +43,12 @@ export class MyApp {
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      //StatusBar.styleDefault();
-      //StatusBar.overlaysWebView(true);
-      StatusBar.backgroundColorByHexString('#1976D2');
-      StatusBar.show();
+      this.statusBar.overlaysWebView(true);
+      this.statusBar.backgroundColorByHexString('#1976D2');
+      this.statusBar.show();
       Splashscreen.hide();
       this.showedAlert = false;
+
       if(!this.NFC.enabled())
       {
         this.showConfirm();
@@ -110,18 +99,12 @@ export class MyApp {
 
   showConfirm() {
     let confirm = this.alertCtrl.create({
-      title: 'NFC nie jest włączone.',
-      message: 'Aby korzystać z aplikacji konieczne jest włączenie NFC w telefonie. Czy chcesz włączyć?',
+      title: 'Twój telefon nie obsługuje NFC.',
+      message: 'Aby korzystać z aplikacji konieczny jest moduł NFC w telefonie.',
       buttons: [
         {
           text: 'Zamknij',
           handler: () => {
-          }
-        },
-        {
-          text: 'Włącz',
-          handler: () => {
-            this.NFC.showSettings();
           }
         }
       ]

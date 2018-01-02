@@ -1,12 +1,10 @@
 ﻿import { Component } from '@angular/core';
 import { NFC, Ndef } from '@ionic-native/nfc';
 import { Http} from '@angular/http';
-import { Device } from '@ionic-native';
 import { Headers } from '@angular/http';
 import { AlertController, NavController } from 'ionic-angular';
 import { map } from 'rxjs/operator/map';
 import { timeout} from 'rxjs/operator/timeout';
-import { DomSanitizer } from '@angular/platform-browser';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/timeout';
 import { Page3 } from '../page3/page3';
@@ -20,87 +18,29 @@ import { TestProvider} from '../testProvider/TestProvider';
 
 export class Page1 {
 
-    public message: string; //szablon
-    public newmessage: string;
-    htmlVariable: string;
-    testRadioOpen: boolean;
-    testRadioResult;
-    flaga: boolean = false;
     isNFCActive: boolean;
     public NFCInfo: string;
     public tagID: string;
     public decodeTag: string;
-    public info: string;
-    public status: string;
-    templates: any;
     public temp: string;
     isAlert: boolean = false;
-    pushPage : any;
     
-
-    constructor(public alertCtrl: AlertController,public navCtrl: NavController, private NFC: NFC, private ndef: Ndef, public http: Http ,public sanitizer: DomSanitizer, public testProvider: TestProvider) { 
+    constructor(public alertCtrl: AlertController,public navCtrl: NavController, private NFC: NFC, private ndef: Ndef, public http: Http , public testProvider: TestProvider) { 
         this.listenNFC();
     }
 
-    changeMessage(){
-        this.testProvider.setMessage(this.message);
-    }
-
-    wybierzSzablon(){
-        console.log("dddd");
+    selectTemplate(){
         this.navCtrl.push(Page3);
     }
-
-    checkWord(){
-        var liczbaslow : number = 0;
-        var liczbaslowtablica :any  = this.testProvider.message.split(" ");
-        this.newmessage = "";
-        for (var i =0 ; i<liczbaslowtablica.length;i++){
-            if(liczbaslowtablica[i]=="w")
-            {
-                //tutej jakis boolean
-                //this.htmlVariable = '<span class="highlight">' + liczbaslowtablica[i] + '</span>';
-                liczbaslowtablica[i] = '<a href="#" onclick="replaceword()"> ' + liczbaslowtablica[i] +  '</a>';
-
-                console.log(liczbaslowtablica[i]);
-            }
-            this.newmessage += liczbaslowtablica[i]+" " ;
-        }
-    }
-
-    replaceword() {
-        console.log("liczbashghi");
-        let alert = this.alertCtrl.create();
-        alert.setTitle('Wybierz słowo');
-    
-        alert.addInput({
-          type: 'radio',
-          label: 'Blue',
-          value: 'blue',
-          checked: true
-        });
-    
-        alert.addButton('Cancel');
-        alert.addButton({
-          text: 'OK',
-          handler: data => {
-            this.testRadioOpen = false;
-            this.testRadioResult = data;
-          }
-        });
-        alert.present();
-       
-    }
-    
 
     listenNFC(){
         //Funkcja wywolująca sie gdy przyłożymy tag do telefonu
         this.testProvider.onInit =true;
         this.NFC.addNdefListener(() => {
-            console.log("Tag wykryty");
+            console.log("Nasłuchiwanie znaczników zostało włączone");
             this.isNFCActive = true;
            }, (err) => {
-             console.log("Wystąpił błąd przy czytaniu tagu");
+             console.log("Brak włączonego NFC!");
              this.showConfirm();
            }).subscribe((event) => {
             //wydarzenia nastepujące po prawidłowym odczycie tagu
@@ -111,14 +51,22 @@ export class Page1 {
              if(this.decodeTag == "040ac26a3b2b81")
              {
                 let headers = new Headers();
+                //headers.append('Authorization','Basic MTIzNDU2OjEyMzQ1Ng==')
                 headers.append('Content-Type', 'application/json');
 
+               /* let dataToSend ={
+                    groupId: "ogolna",
+                    content: this.getContent(this.testProvider.message)
+                };*/
                 let dataToSend ={
                     message: this.testProvider.message
                 };
 
                 if(!this.isAlert)//zeby nie wysyłać wiadomosci kiedy jest wyswietlone powiadomienie
                 {
+                 //this.http.post('http://'+this.testProvider.adresServera+':'+this.testProvider.port,JSON.stringify(dataToSend), {headers: headers})
+                 //this.http.put('https://'+this.testProvider.adresServera+':'+this.testProvider.port+'/general',JSON.stringify(dataToSend),{headers:headers})
+                 //this.http.put('https://nefico.tele.pw.edu.pl:8080/general',JSON.stringify(dataToSend),{headers:headers})
                  this.http.post('http://'+this.testProvider.adresServera+':'+this.testProvider.port,JSON.stringify(dataToSend), {headers: headers})
                  .map(res => res.text())
                  .subscribe(data => {
@@ -144,61 +92,18 @@ export class Page1 {
         return !this.isNFCActive;
     }
     
-    doRadio() { 
-        if(!this.isAlert)
-        {
-            this.http.get('http://'+this.testProvider.adresServera+':'+this.testProvider.port+'/templates.json')
-                .timeout(3000)
-                .map(res => res.text())
-                .subscribe(dataTemplate =>{
-                    try{
-                    var jsonobject = JSON.parse(dataTemplate.toString());
-                    let alert = this.alertCtrl.create();
-                    alert.setTitle('Szablon wiadomości');
-                    for(let i in jsonobject)
-                    {
-                        if (jsonobject[i].id == 1 )
-                        {
-                            alert.addInput({
-                                type: 'radio',
-                                label: jsonobject[i].template,
-                                value: jsonobject[i].template,
-                                checked: true
-                            });
-                        }
-                        else{
-                            alert.addInput({
-                                type: 'radio',
-                                label: jsonobject[i].template,
-                                value: jsonobject[i].template
-                            });
-                        }
-                    }
-
-                    alert.addButton('Cancel');
-                    alert.addButton({
-                        text: 'Ok',
-                        handler: data => {
-                            this.testRadioOpen = false;
-                            this.testRadioResult = data;
-                            this.testProvider.message = data;
-                        }
-                    });
-            
-                    alert.present().then(() => {
-                        this.testRadioOpen = true;
-                    }); 
-                    }catch(err){
-                        this.showAlert('Powiadomienie','Wystąpił błąd podczas wyświetlania szablonów: '+err);
-                    }
-                
-                
-                }, (err)=>{
-                        this.showAlert('Nie udało się pobrać szablonów z serwera: ','Przekroczono czas oczekiwania: ' +err);
-                    
-                });
-        }
+    getContent(myContent: string){
+        return "<div class=\"mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base\"><div class=\"mdl-layout mdl-js-layout mdl-layout--fixed-header\"><header class=\"mdl-layout__header mdl-layout__header--scroll mdl-color--primary\"><div class=\"mdl-layout--large-screen-only mdl-layout__header-row\">"
+        +"</div><div class=\"mdl-layout--large-screen-only mdl-layout__header-row\"><h3>Serwer Wiadomości</h3>"
+        +"</div><div class=\"mdl-layout--large-screen-only mdl-layout__header-row\">"
+        +"</div><div class=\"mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark\">"
+        +"<a href=\"#overview\" class=\"mdl-layout__tab is-active\">Wiadomość</a></div></header>"
+        +"<main class=\"mdl-layout__content\"><div class=\"mdl-layout__tab-panel is-active\" id=\"overview\">"
+        +"<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">"
+        +"<div class=\"mdl-card mdl-cell mdl-cell--12-col\"><div class=\"mdl-card__supporting-text\"><h4>Wiadomość</h4>"
+        +myContent+"</div></div></section></div></main></div><script defer src=\"https://code.getmdl.io/1.3.0/material.min.js\"></script></div>"
     }
+
 
     showConfirm() {
         let confirm = this.alertCtrl.create({

@@ -1,7 +1,9 @@
 ﻿<ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
+      <div class="icon-menu">
+        <ion-icon name="arrow-back"></ion-icon>
+      </div>
     </button>
     <ion-title>Szablony</ion-title>
   </ion-navbar>
@@ -24,7 +26,7 @@
       </ion-select>
     </ion-item>
   </ion-list>
-  <button ion-button (click)="przekazwiadomosc()"> Wybierz </button>
+  <button ion-button (click)="getSelectedTemplateToTextArea()"> Wybierz </button>
 </div>
 
  <div class="NFCon" *ngIf="isNoTemplates();">

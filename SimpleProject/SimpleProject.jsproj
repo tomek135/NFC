@@ -9,6 +9,10 @@
       <Configuration>Debug</Configuration>
       <Platform>iOS</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows Phone">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows Phone</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Windows-AnyCPU">
       <Configuration>Debug</Configuration>
       <Platform>Windows-AnyCPU</Platform>
@@ -33,6 +37,10 @@
       <Configuration>Release</Configuration>
       <Platform>iOS</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows Phone">
+      <Configuration>Release</Configuration>
+      <Platform>Windows Phone</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Windows-AnyCPU">
       <Configuration>Release</Configuration>
       <Platform>Windows-AnyCPU</Platform>
@@ -55,6 +63,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>549cba80-397b-4f8e-bb0e-5944e9d7e7dd</ProjectGuid>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '15.0'">
@@ -85,17 +94,17 @@
       <UserProperties />
     </VisualStudio>
   </ProjectExtensions>
-  <ItemGroup >
+  <ItemGroup>
     <ProjectCapability Include="UseFileGlobs" />
   </ItemGroup>
-  <PropertyGroup >
+  <PropertyGroup>
     <!-- Customize which folders are not shown by default -->
     <ExcludedItems>bin;bld;platforms;node_modules;simulation</ExcludedItems>
   </PropertyGroup>
-  <ItemGroup >
+  <ItemGroup>
     <Content Include="**\**" Exclude="**\platforms\**;**\bin\**;**\bld\**;**\node_modules\**;**\simulation\**;.gitignore;SimpleProject.*" />
   </ItemGroup>
-  <ItemGroup >
+  <ItemGroup>
     <Content Update="config.xml">
       <SubType>Designer</SubType>
     </Content>

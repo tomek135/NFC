@@ -12,18 +12,15 @@ export class Page3 {
   constructor(public alertCtrl: AlertController, public http: Http, public navParams: NavParams, public navController: NavController, public testProvider: TestProvider) {
     this.getTemplates();
     }
-  showEdition: boolean = false;
+    
   templates: string[][];
   isNoTemplate: boolean = false;
-  data: string;
   public selectTemplate: string;
   public selectOption: string;
   public selectOptionAdd: string;
   public allMessage: string;
-  SelectedValue: string;
   jsonobject: any;
   callback;
-
 
     getTemplates(){
       this.http.get('http://'+this.testProvider.adresServera+':'+this.testProvider.port+'/templates.json')
@@ -32,7 +29,7 @@ export class Page3 {
       .subscribe(dataTemplate =>{
         this.jsonobject = JSON.parse(dataTemplate.toString());
           this.isNoTemplate = false;
-          //this.showSelectItems();
+          //this.showSelectItems(); //do testów aby wyswietlic
     }, (err)=>{
      this.showAlert("Nie udało się pobrać danych z serwera",err);
      this.isNoTemplate = true;
@@ -54,8 +51,7 @@ export class Page3 {
         }
     }
 
-
-    przekazwiadomosc(callback){
+    getSelectedTemplateToTextArea(callback){
      this.allMessage = isDefined(this.selectTemplate)+isDefined(this.selectOption)+isDefined(this.selectOptionAdd);
       console.log("Wiadomość "+ this.allMessage);
 
@@ -63,51 +59,9 @@ export class Page3 {
       this.navController.pop();
     }
 
-
-
     isNoTemplates(){
       return this.isNoTemplate;
     }
-
-    showSelectValue(SelectedValue){
-      console.log("A "+ SelectedValue);
-    }
-
-    itemSelected(templateName: string) {
-    
-    this.showEdition = true;
-    console.log("Selected Item", templateName);
-    /*let alert = this.alertCtrl.create({
-    title: 'Edition',
-    inputs: [
-      {
-        value: templateName,
-      }
-    ],
-    buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: data => {
-          console.log('Cancel clicked');
-        }
-      },
-      {
-        text: 'Save',
-        handler: data => {
-          console.log('data:', data);
-          this.templates.templateName = data;
-          this.sendChangeToServer();
-        }
-      }
-    ]
-  });
-  alert.present();*/
-
-  }
-
-  sendChangeToServer(){
-  }
 
   showAlert(title: string, subTitle: string) {
     let alert = this.alertCtrl.create({

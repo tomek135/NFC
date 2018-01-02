@@ -1,7 +1,9 @@
 ﻿import { NgModule, ErrorHandler, Component } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { NativeStorage } from '@ionic-native/native-storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { NFC, Ndef } from '@ionic-native/nfc';
+import { Device } from '@ionic-native/device';
 import { HttpModule} from '@angular/http';
 import { Headers } from '@angular/http';
 import { MyApp } from './app.component';
@@ -20,8 +22,16 @@ import { Page3 } from '../pages/page3/page3';
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp,{
+      menuType: 'overlay',
+      platforms: {
+        ios: {
+          menuType: 'reveal',
+        }
+      }
+    })
   ],
+
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -29,6 +39,6 @@ import { Page3 } from '../pages/page3/page3';
     Page2,
     Page3
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},StatusBar,NFC,Ndef]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},StatusBar,NFC,Ndef,NativeStorage,Device]
 })
 export class AppModule {}

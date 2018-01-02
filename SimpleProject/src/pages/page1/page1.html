@@ -9,21 +9,19 @@
   </ion-navbar>
 </ion-header>
   <ion-content ngInit="listenNFC()">
-        <h3> Aby wysłać wiadomość przyłóż tag NFC do telefonu.</h3>
+        <h3> Aby wysłać wiadomość przyłóż znacznik NFC do telefonu.</h3>
         <h5> Wiadomość</h5>
       <label class="item item-input" name="textArea">
-        <textarea [(ngModel)]= "testProvider.message" placeholder="Napisz wiadomość..." (change)="checkWord()">{{testProvider.message}}</textarea>
+        <textarea [(ngModel)]= "testProvider.message" placeholder="Napisz wiadomość...">{{testProvider.message}}</textarea>
         <div contenteditable="true" ></div>
       </label>
       <div class="button">
     <!--<button ion-button button-positive button-block (click)="doRadio()"> Szablony</button>-->
-    <button ion-button (click) = "wybierzSzablon()">Szablony</button>
+    <button ion-button (click) = "selectTemplate()">Szablony</button>
       </div>
       <ion-item class="info">
         <p> NFC tag ID: {{tagID}}</p>
         <p> Decode Tag: {{decodeTag}}</p>
-        <p> Wiadomość: </p>
-        <p [innerHTML]="sanitizer.bypassSecurityTrustHtml(newmessage)"> {{newmessage}}</p>
       </ion-item>
       <ion-item>
         <ion-label fixed> Adres Serwera: </ion-label>
