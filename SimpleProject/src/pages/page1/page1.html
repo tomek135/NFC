@@ -2,8 +2,8 @@
   <ion-navbar>
     <button ion-button menuToggle>
       <div class="icon-menu">
-      <ion-icon name="menu"></ion-icon>
-    </div>
+        <ion-icon name="menu"></ion-icon>
+      </div>
     </button>
     <ion-title> Wyślij Wiadomość</ion-title>
   </ion-navbar>
@@ -16,18 +16,19 @@
         <div contenteditable="true" ></div>
       </label>
       <div class="button">
-    <!--<button ion-button button-positive button-block (click)="doRadio()"> Szablony</button>-->
-    <button ion-button (click) = "selectTemplate()">Szablony</button>
+    <button color="button" ion-button (click) = "selectTemplate()">Szablony</button>
       </div>
-      <ion-item class="info">
+      <!--<ion-item class="info">
         <p> NFC tag ID: {{tagID}}</p>
         <p> Decode Tag: {{decodeTag}}</p>
-      </ion-item>
-      <ion-item>
+        <p> key: {{testProvider.key}}</p>
+        <p> groupid: {{testProvider.IdGroup}}</p>
+      </ion-item>-->
+      <ion-item class="info">
         <ion-label fixed> Adres Serwera: </ion-label>
         <ion-input type="text" value="" [(ngModel)]= "testProvider.adresServera">{{testProvider.adresServera}}</ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item class="info">
         <ion-label fixed> Port: </ion-label>
         <ion-input type="text" value="" [(ngModel)]= "testProvider.port">{{testProvider.port}}</ion-input>
       </ion-item>

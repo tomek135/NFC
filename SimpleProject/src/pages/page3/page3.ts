@@ -24,7 +24,7 @@ export class Page3 {
 
     getTemplates(){
       this.http.get('http://'+this.testProvider.adresServera+':'+this.testProvider.port+'/templates.json')
-      .timeout(3000)
+      .timeout(1000)
       .map(res => res.text())
       .subscribe(dataTemplate =>{
         this.jsonobject = JSON.parse(dataTemplate.toString());

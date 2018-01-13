@@ -7,8 +7,6 @@ import { NFC, Ndef } from '@ionic-native/nfc';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 //import { Page3 } from '../pages/page3/page3';
-import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import {TestProvider} from '../pages/testProvider/TestProvider';
 
 
@@ -22,10 +20,10 @@ export class MyApp {
   rootPage: any = Page1;
   showedAlert: boolean;
   confirmAlert;
-  versja: number;
+
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public alertCtrl: AlertController, public NFC: NFC,public ndef: Ndef,private statusBar: StatusBar) {
+  constructor(public platform: Platform, public testProvider: TestProvider, public alertCtrl: AlertController, public NFC: NFC,public ndef: Ndef,private statusBar: StatusBar) {
     this.initializeApp();
 
 
@@ -54,6 +52,7 @@ export class MyApp {
         this.showConfirm();
       }
     
+
 
     //Confirm exit
     this.platform.registerBackButtonAction(()=> {

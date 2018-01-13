@@ -2,6 +2,7 @@
 import { NFC, Ndef } from '@ionic-native/nfc';
 import { Http} from '@angular/http';
 import { Headers } from '@angular/http';
+import { Deeplinks } from '@ionic-native/deeplinks';
 import { AlertController, NavController } from 'ionic-angular';
 import { map } from 'rxjs/operator/map';
 import { timeout} from 'rxjs/operator/timeout';
@@ -20,18 +21,67 @@ export class Page1 {
 
     isNFCActive: boolean;
     public NFCInfo: string;
-    public tagID: string;
-    public decodeTag: string;
+    public tagID: number[];
+    public tagIDAfterEncode: number;
+    public decodeTag: number;
     public temp: string;
+    public keySplit: any;
     isAlert: boolean = false;
+    public receivedLink: string;
     
-    constructor(public alertCtrl: AlertController,public navCtrl: NavController, private NFC: NFC, private ndef: Ndef, public http: Http , public testProvider: TestProvider) { 
-        this.listenNFC();
-    }
+    constructor( 
+        public deeplinks: Deeplinks,
+        public alertCtrl: AlertController,
+        public navCtrl: NavController, 
+        private NFC: NFC, 
+        private ndef: Ndef, 
+        public http: Http , 
+        public testProvider: TestProvider) { 
+        
+            this.deeplinks.route({
+              '/': {}
+            }).subscribe((match)=>{
+            //this.showAlert("Autoryzacja poprawna!","Key: " +match.$args.key +"\n ID Grupy: "+ match.$args.IdGroup );//testy
+            //alert(JSON.stringify(match));
+            let receivedData = {
+                key : match.$args.key,
+                IdGroup: match.$args.IdGroup,
+                link: match.$link.queryString,
+            }
+            this.testProvider.key= receivedData.key;
+            this.testProvider.IdGroup = receivedData.IdGroup;
+            this.receivedLink = receivedData.link;
+
+            var keyLength = this.testProvider.key.length;
+            switch(keyLength%4)
+            {
+                case 0: break;
+                case 2:
+                {
+                    this.testProvider.key = this.testProvider.key+"==";
+                    break;
+                }
+                case 3:
+                {
+                    this.testProvider.key = this.testProvider.key+"=";
+                    break;
+                }
+            }
+            // var liczbaslowtablica :any  = this.receivedLink.split("=");
+            // for (var i =0 ; i<liczbaslowtablica.length-3;i++){
+            //     this.testProvider.key=this.testProvider.key+"=";
+            // }
+            alert("Autoryzacja poprawna! \n Nazwa Grupy: "+ this.testProvider.IdGroup);
+            },(noMatch)=>{
+            console.log("Wystąpił problem "+JSON.stringify(noMatch));
+            })
+            //this.listenNFC();
+        }
 
     selectTemplate(){
         this.navCtrl.push(Page3);
     }
+
 
     listenNFC(){
         //Funkcja wywolująca sie gdy przyłożymy tag do telefonu
@@ -45,37 +95,38 @@ export class Page1 {
            }).subscribe((event) => {
             //wydarzenia nastepujące po prawidłowym odczycie tagu
              this.tagID = event.tag.id; // ID tagu
-             this.decodeTag = this.NFC.bytesToHexString(event.tag.id); //ID tagu zapisane w hex
+             this.decodeTag = parseInt(this.NFC.bytesToHexString(event.tag.id),16);  //ID tagu zapisane w hex
+             this.temp = atob(this.testProvider.key);
+             this.keySplit = this.temp.split(":");
+             this.tagIDAfterEncode = this.keySplit[0];
              
-
-             if(this.decodeTag == "040ac26a3b2b81")
+             if(this.decodeTag == this.tagIDAfterEncode)//MDQwYWMyNmEzYjJiODE6MDQwYWMyNmEzYjJiODE=
              {
                 let headers = new Headers();
-                //headers.append('Authorization','Basic MTIzNDU2OjEyMzQ1Ng==')
+                headers.append('Authorization','Basic '+ this.testProvider.key);// MTIzNDU2OjEyMzQ1Ng==
                 headers.append('Content-Type', 'application/json');
 
-               /* let dataToSend ={
-                    groupId: "ogolna",
-                    content: this.getContent(this.testProvider.message)
-                };*/
                 let dataToSend ={
-                    message: this.testProvider.message
+                    groupId: this.testProvider.IdGroup,
+                    content: this.getContent(this.testProvider.message)
                 };
+                /*let dataToSend ={
+                    message: this.testProvider.message
+                };*/
 
                 if(!this.isAlert)//zeby nie wysyłać wiadomosci kiedy jest wyswietlone powiadomienie
                 {
                  //this.http.post('http://'+this.testProvider.adresServera+':'+this.testProvider.port,JSON.stringify(dataToSend), {headers: headers})
                  //this.http.put('https://'+this.testProvider.adresServera+':'+this.testProvider.port+'/general',JSON.stringify(dataToSend),{headers:headers})
-                 //this.http.put('https://nefico.tele.pw.edu.pl:8080/general',JSON.stringify(dataToSend),{headers:headers})
-                 this.http.post('http://'+this.testProvider.adresServera+':'+this.testProvider.port,JSON.stringify(dataToSend), {headers: headers})
+                 this.http.put('https://nefico.tele.pw.edu.pl:8080/general',JSON.stringify(dataToSend),{headers:headers})
+                 //this.http.put('https://'+this.testProvider.adresServera+':'+this.testProvider.port+'/general',JSON.stringify(dataToSend), {headers: headers})
                  .map(res => res.text())
                  .subscribe(data => {
-                        this.showAlert('Powiadomienie',data);
+                        this.showAlert('Powiadomienie','Wiadomość została wysłana');
                     }, (err)=>{
                         this.showAlert('Nie udało się wysłać wiadomości!',err);
                     });
                 }
-
              }
              else
              {
@@ -94,14 +145,17 @@ export class Page1 {
     
     getContent(myContent: string){
         return "<div class=\"mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base\"><div class=\"mdl-layout mdl-js-layout mdl-layout--fixed-header\"><header class=\"mdl-layout__header mdl-layout__header--scroll mdl-color--primary\"><div class=\"mdl-layout--large-screen-only mdl-layout__header-row\">"
-        +"</div><div class=\"mdl-layout--large-screen-only mdl-layout__header-row\"><h3>Serwer Wiadomości</h3>"
+        +"</div><div class=\"mdl-layout--large-screen-only mdl-layout__header-row\"><h3>Nefico - Wiadomości</h3>"
         +"</div><div class=\"mdl-layout--large-screen-only mdl-layout__header-row\">"
         +"</div><div class=\"mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark\">"
         +"<a href=\"#overview\" class=\"mdl-layout__tab is-active\">Wiadomość</a></div></header>"
         +"<main class=\"mdl-layout__content\"><div class=\"mdl-layout__tab-panel is-active\" id=\"overview\">"
         +"<section class=\"section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp\">"
-        +"<div class=\"mdl-card mdl-cell mdl-cell--12-col\"><div class=\"mdl-card__supporting-text\"><h4>Wiadomość</h4>"
-        +myContent+"</div></div></section></div></main></div><script defer src=\"https://code.getmdl.io/1.3.0/material.min.js\"></script></div>"
+        +"<div class=\"mdl-card mdl-cell mdl-cell--12-col\"><div class=\"mdl-card__supporting-text\"><h4>Wiadomość</h4><h5>"
+        +myContent+"</h5></div></div></section></div><footer class = \"mdl-mini-footer mdl-color--primary\">"
+        +"<div class = \"mdl-mini-footer__left-section\"><ul class = \"mdl-mini-footer__link-list\">"
+        +"<li><a href=\"https://secure.tele.pw.edu.pl/\" class=\"mdl-layout__tab mdl-color-text--grey-100 mdl-base\">Instytut Telekomunikacji PW</a></li>"
+        +"</ul></div></footer></main></div><script defer src=\"https://code.getmdl.io/1.3.0/material.min.js\"></script></div>"
     }
 
 
@@ -135,8 +189,8 @@ export class Page1 {
                 text: 'OK',
                 handler: () =>{
                     this.isAlert = false;
-                }
-            }]
+                    }
+                }]
             });
             alert.present().then(()=>{
             this.isAlert=true;

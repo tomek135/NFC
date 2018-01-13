@@ -6,6 +6,8 @@ export class TestProvider {
  public message: any = "";
  public adresServera: string;
  public port: number; 
+ public key: string;
+ public IdGroup: string;
  public onInit: boolean = false;
 
  constructor() {
