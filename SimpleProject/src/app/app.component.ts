@@ -29,7 +29,6 @@ export class MyApp {
     this.pages = [
       { title: 'Wyślij wiadomość', component: Page1 },
       { title: 'O aplikacji', component: Page2 }
-     // { title: 'Szablony', component: Page3 }
     ];
     
   }

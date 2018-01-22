@@ -65,12 +65,11 @@ export class Page1 {
                     break;
                 }
             }
-            //alert("Autoryzacja poprawna! \nNazwa Grupy: "+ this.testProvider.groupId);
-            this.showAlert('Autoryzacja poprawna!','ID Grupy: ' + this.testProvider.groupId);
+            alert("Autoryzacja poprawna! \nNazwa Grupy: "+ this.testProvider.groupId);
             },(noMatch)=>{
             console.log("Wystąpił problem "+JSON.stringify(noMatch));
             })
-            //this.listenNFC();
+            this.listenNFC();
         }
 
     selectTemplate(){
@@ -80,7 +79,7 @@ export class Page1 {
 
     listenNFC(){
         //Funkcja wywolująca sie gdy przyłożymy tag do telefonu
-       /* this.NFC.addNdefListener(() => {
+        this.NFC.addNdefListener(() => {
             console.log("Nasłuchiwanie znaczników zostało włączone");
             this.isNFCActive = true;
            }, (err) => {
@@ -104,16 +103,12 @@ export class Page1 {
                     groupId: this.testProvider.groupId,
                     content: this.getContent(this.testProvider.message)
                 };
-                /*let dataToSend ={
-                    message: this.testProvider.message
-                };*/
 
                 if(!this.isAlert)//zeby nie wysyłać wiadomosci kiedy jest wyswietlone powiadomienie
                 {
                  //this.http.post('http://'+this.testProvider.adresServera+':'+this.testProvider.port,JSON.stringify(dataToSend), {headers: headers})
                  //this.http.put('https://'+this.testProvider.adresServera+':'+this.testProvider.port+'/general',JSON.stringify(dataToSend),{headers:headers})
                  this.http.put('https://nefico.tele.pw.edu.pl:8080/general',JSON.stringify(dataToSend),{headers:headers})
-                 //this.http.put('https://'+this.testProvider.adresServera+':'+this.testProvider.port+'/general',JSON.stringify(dataToSend), {headers: headers})
                  .timeout(1000)
                  .map(res => res.text())
                  .subscribe(data => {
@@ -127,7 +122,7 @@ export class Page1 {
             // {
              //   this.showAlert('Brak uprawnień!','Nie masz wystarczających uprawnień aby wysłać wiadomość.');
            // }
-         //  });
+           });
     }
 
     getContent(myContent: string){
