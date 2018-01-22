@@ -2,7 +2,6 @@
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { BrowserModule } from '@angular/platform-browser';
-import { NFC, Ndef } from '@ionic-native/nfc';
 import { Device } from '@ionic-native/device';
 import { HttpModule} from '@angular/http';
 import { Deeplinks } from '@ionic-native/deeplinks';
@@ -40,6 +39,6 @@ import { Page3 } from '../pages/page3/page3';
     Page2,
     Page3
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},StatusBar,NFC,Ndef,Deeplinks]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},StatusBar,Deeplinks]
 })
 export class AppModule {}

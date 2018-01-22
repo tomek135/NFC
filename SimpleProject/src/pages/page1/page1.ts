@@ -1,5 +1,4 @@
 ﻿import { Component } from '@angular/core';
-import { NFC, Ndef } from '@ionic-native/nfc';
 import { Http} from '@angular/http';
 import { Headers } from '@angular/http';
 import { Deeplinks } from '@ionic-native/deeplinks';
@@ -14,7 +13,7 @@ import { TestProvider} from '../testProvider/TestProvider';
 @Component({
     selector: 'page-page1',
     templateUrl: 'page1.html',
-    providers: [NFC,Ndef]
+    providers: []
 })
 
 export class Page1 {
@@ -33,8 +32,6 @@ export class Page1 {
         public deeplinks: Deeplinks,
         public alertCtrl: AlertController,
         public navCtrl: NavController, 
-        private NFC: NFC, 
-        private ndef: Ndef, 
         public http: Http , 
         public testProvider: TestProvider) { 
         
@@ -65,12 +62,10 @@ export class Page1 {
                     break;
                 }
             }
-            //alert("Autoryzacja poprawna! \nNazwa Grupy: "+ this.testProvider.groupId);
             this.showAlert('Autoryzacja poprawna!','ID Grupy: ' + this.testProvider.groupId);
             },(noMatch)=>{
             console.log("Wystąpił problem "+JSON.stringify(noMatch));
             })
-            //this.listenNFC();
         }
 
     selectTemplate(){
@@ -78,42 +73,20 @@ export class Page1 {
     }
 
 
-    listenNFC(){
-        //Funkcja wywolująca sie gdy przyłożymy tag do telefonu
-       /* this.NFC.addNdefListener(() => {
-            console.log("Nasłuchiwanie znaczników zostało włączone");
-            this.isNFCActive = true;
-           }, (err) => {
-             console.log("Brak włączonego NFC!");
-             this.showConfirm();
-           }).subscribe((event) => {
-            //wydarzenia nastepujące po prawidłowym odczycie tagu
-             this.tagID = event.tag.id; // ID tagu
-             this.decodeTag = parseInt(this.NFC.bytesToHexString(event.tag.id),16);  //ID tagu zapisane w hex
-             this.temp = atob(this.testProvider.key);//dekodowanie klucza
-             this.keySplit = this.temp.split(":");
-             this.tagIDAfterEncode = this.keySplit[0];
-             
-             //if(this.decodeTag == this.tagIDAfterEncode)//MDQwYWMyNmEzYjJiODE6MDQwYWMyNmEzYjJiODE=
-            // {*/
+    sendMessage(){
+
                 let headers = new Headers();
-                headers.append('Authorization','Basic '+ this.testProvider.key);// MTIzNDU2OjEyMzQ1Ng==
+                headers.append('Authorization','Basic '+ this.testProvider.key);
                 headers.append('Content-Type', 'application/json');
 
                 let dataToSend ={
                     groupId: this.testProvider.groupId,
                     content: this.getContent(this.testProvider.message)
                 };
-                /*let dataToSend ={
-                    message: this.testProvider.message
-                };*/
 
                 if(!this.isAlert)//zeby nie wysyłać wiadomosci kiedy jest wyswietlone powiadomienie
                 {
-                 //this.http.post('http://'+this.testProvider.adresServera+':'+this.testProvider.port,JSON.stringify(dataToSend), {headers: headers})
-                 //this.http.put('https://'+this.testProvider.adresServera+':'+this.testProvider.port+'/general',JSON.stringify(dataToSend),{headers:headers})
                  this.http.put('https://nefico.tele.pw.edu.pl:8080/general',JSON.stringify(dataToSend),{headers:headers})
-                 //this.http.put('https://'+this.testProvider.adresServera+':'+this.testProvider.port+'/general',JSON.stringify(dataToSend), {headers: headers})
                  .timeout(1000)
                  .map(res => res.text())
                  .subscribe(data => {
@@ -122,12 +95,6 @@ export class Page1 {
                         this.showAlert('Nie udało się wysłać wiadomości!',err);
                     });
                 }
-             //}
-            // else
-            // {
-             //   this.showAlert('Brak uprawnień!','Nie masz wystarczających uprawnień aby wysłać wiadomość.');
-           // }
-         //  });
     }
 
     getContent(myContent: string){
@@ -144,28 +111,6 @@ export class Page1 {
         +"<li><a href=\"https://secure.tele.pw.edu.pl/\" class=\"mdl-layout__tab mdl-color-text--grey-100 mdl-base\">Instytut Telekomunikacji PW</a></li>"
         +"</ul></div></footer></main></div><script defer src=\"https://code.getmdl.io/1.3.0/material.min.js\"></script></div>"
     }
-
-
-    showConfirm() {
-        let confirm = this.alertCtrl.create({
-          title: 'NFC nie jest włączone.',
-          message: 'Aby korzystać z aplikacji konieczne jest włączenie NFC w telefonie. Czy chcesz włączyć?',
-          buttons: [
-            {
-              text: 'Zamknij',
-              handler: () => {
-              }
-            },
-            {
-              text: 'Włącz',
-              handler: () => {
-                this.NFC.showSettings();
-              }
-            }
-          ]
-        });
-        confirm.present();
-      }
 
       showAlert(title: string, subTitle: string) {
         if(!this.isAlert){
