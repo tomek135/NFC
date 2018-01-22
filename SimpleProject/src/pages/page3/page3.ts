@@ -23,7 +23,8 @@ export class Page3 {
   callback;
 
     getTemplates(){
-      this.http.get('http://'+this.testProvider.adresServera+':'+this.testProvider.port+'/templates.json')
+      //this.http.get('http://'+this.testProvider.adresServera+':'+this.testProvider.port+'/templates.json')
+      this.http.get('https://nefico.tele.pw.edu.pl:8080/download/templates')
       .timeout(1000)
       .map(res => res.text())
       .subscribe(dataTemplate =>{

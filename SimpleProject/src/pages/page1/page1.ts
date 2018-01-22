@@ -41,18 +41,16 @@ export class Page1 {
             this.deeplinks.route({
               '/': {}
             }).subscribe((match)=>{
-            //this.showAlert("Autoryzacja poprawna!","Key: " +match.$args.key +"\n ID Grupy: "+ match.$args.IdGroup );//testy
-            //alert(JSON.stringify(match));
             let receivedData = {
                 key : match.$args.key,
-                IdGroup: match.$args.IdGroup,
+                groupId: match.$args.groupId,
                 link: match.$link.queryString,
             }
             this.testProvider.key= receivedData.key;
-            this.testProvider.IdGroup = receivedData.IdGroup;
+            this.testProvider.groupId = receivedData.groupId;
             this.receivedLink = receivedData.link;
 
-            var keyLength = this.testProvider.key.length;
+            var keyLength = this.testProvider.key.length;//długość znaków klucza
             switch(keyLength%4)
             {
                 case 0: break;
@@ -67,11 +65,8 @@ export class Page1 {
                     break;
                 }
             }
-            // var liczbaslowtablica :any  = this.receivedLink.split("=");
-            // for (var i =0 ; i<liczbaslowtablica.length-3;i++){
-            //     this.testProvider.key=this.testProvider.key+"=";
-            // }
-            alert("Autoryzacja poprawna! \n Nazwa Grupy: "+ this.testProvider.IdGroup);
+            //alert("Autoryzacja poprawna! \nNazwa Grupy: "+ this.testProvider.groupId);
+            this.showAlert('Autoryzacja poprawna!','ID Grupy: ' + this.testProvider.groupId);
             },(noMatch)=>{
             console.log("Wystąpił problem "+JSON.stringify(noMatch));
             })
@@ -85,8 +80,7 @@ export class Page1 {
 
     listenNFC(){
         //Funkcja wywolująca sie gdy przyłożymy tag do telefonu
-        this.testProvider.onInit =true;
-        this.NFC.addNdefListener(() => {
+       /* this.NFC.addNdefListener(() => {
             console.log("Nasłuchiwanie znaczników zostało włączone");
             this.isNFCActive = true;
            }, (err) => {
@@ -96,18 +90,18 @@ export class Page1 {
             //wydarzenia nastepujące po prawidłowym odczycie tagu
              this.tagID = event.tag.id; // ID tagu
              this.decodeTag = parseInt(this.NFC.bytesToHexString(event.tag.id),16);  //ID tagu zapisane w hex
-             this.temp = atob(this.testProvider.key);
+             this.temp = atob(this.testProvider.key);//dekodowanie klucza
              this.keySplit = this.temp.split(":");
              this.tagIDAfterEncode = this.keySplit[0];
              
-             if(this.decodeTag == this.tagIDAfterEncode)//MDQwYWMyNmEzYjJiODE6MDQwYWMyNmEzYjJiODE=
-             {
+             //if(this.decodeTag == this.tagIDAfterEncode)//MDQwYWMyNmEzYjJiODE6MDQwYWMyNmEzYjJiODE=
+            // {*/
                 let headers = new Headers();
                 headers.append('Authorization','Basic '+ this.testProvider.key);// MTIzNDU2OjEyMzQ1Ng==
                 headers.append('Content-Type', 'application/json');
 
                 let dataToSend ={
-                    groupId: this.testProvider.IdGroup,
+                    groupId: this.testProvider.groupId,
                     content: this.getContent(this.testProvider.message)
                 };
                 /*let dataToSend ={
@@ -120,6 +114,7 @@ export class Page1 {
                  //this.http.put('https://'+this.testProvider.adresServera+':'+this.testProvider.port+'/general',JSON.stringify(dataToSend),{headers:headers})
                  this.http.put('https://nefico.tele.pw.edu.pl:8080/general',JSON.stringify(dataToSend),{headers:headers})
                  //this.http.put('https://'+this.testProvider.adresServera+':'+this.testProvider.port+'/general',JSON.stringify(dataToSend), {headers: headers})
+                 .timeout(1000)
                  .map(res => res.text())
                  .subscribe(data => {
                         this.showAlert('Powiadomienie','Wiadomość została wysłana');
@@ -127,22 +122,14 @@ export class Page1 {
                         this.showAlert('Nie udało się wysłać wiadomości!',err);
                     });
                 }
-             }
-             else
-             {
-                this.showAlert('Brak uprawnień!','Nie masz wystarczających uprawnień aby wysłać wiadomość.');
-             }
-           });
+             //}
+            // else
+            // {
+             //   this.showAlert('Brak uprawnień!','Nie masz wystarczających uprawnień aby wysłać wiadomość.');
+           // }
+         //  });
     }
 
-    isNFCisActive(){
-        return this.isNFCActive;
-    }
-
-    isNFCUnactive(){
-        return !this.isNFCActive;
-    }
-    
     getContent(myContent: string){
         return "<div class=\"mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base\"><div class=\"mdl-layout mdl-js-layout mdl-layout--fixed-header\"><header class=\"mdl-layout__header mdl-layout__header--scroll mdl-color--primary\"><div class=\"mdl-layout--large-screen-only mdl-layout__header-row\">"
         +"</div><div class=\"mdl-layout--large-screen-only mdl-layout__header-row\"><h3>Nefico - Wiadomości</h3>"

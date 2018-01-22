@@ -3,16 +3,14 @@ import { Nav, Platform } from 'ionic-angular';
 import { AlertController} from 'ionic-angular';
 import { Splashscreen} from 'ionic-native';
 import { StatusBar} from '@ionic-native/status-bar';
-import { NFC, Ndef } from '@ionic-native/nfc';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
-//import { Page3 } from '../pages/page3/page3';
 import {TestProvider} from '../pages/testProvider/TestProvider';
 
 
 @Component({
   templateUrl: 'app.html',
-  providers: [NFC,Ndef,TestProvider,StatusBar]
+  providers: [TestProvider,StatusBar]
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
@@ -23,7 +21,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public testProvider: TestProvider, public alertCtrl: AlertController, public NFC: NFC,public ndef: Ndef,private statusBar: StatusBar) {
+  constructor(public platform: Platform, public testProvider: TestProvider, public alertCtrl: AlertController, private statusBar: StatusBar) {
     this.initializeApp();
 
 
@@ -33,7 +31,6 @@ export class MyApp {
       { title: 'O aplikacji', component: Page2 }
      // { title: 'Szablony', component: Page3 }
     ];
-
     
   }
 
@@ -46,13 +43,6 @@ export class MyApp {
       this.statusBar.show();
       Splashscreen.hide();
       this.showedAlert = false;
-
-      if(!this.NFC.enabled())
-      {
-        this.showConfirm();
-      }
-    
-
 
     //Confirm exit
     this.platform.registerBackButtonAction(()=> {
@@ -70,12 +60,11 @@ export class MyApp {
     });
   }
 
-
   confirmExitApp(){
     this.showedAlert = true;
     this.confirmAlert = this.alertCtrl.create({
-      title: "Zamknąć apliakcję?",
-      message: "Czy chcesz wyjść z aplikacji?",
+      title: "Komunikat",
+      message: "Czy zamknąc aplikację?",
       buttons: [
         {
             text: 'Nie',
@@ -94,21 +83,6 @@ export class MyApp {
 
     });
     this.confirmAlert.present();
-  }
-
-  showConfirm() {
-    let confirm = this.alertCtrl.create({
-      title: 'Twój telefon nie obsługuje NFC.',
-      message: 'Aby korzystać z aplikacji konieczny jest moduł NFC w telefonie.',
-      buttons: [
-        {
-          text: 'Zamknij',
-          handler: () => {
-          }
-        }
-      ]
-    });
-    confirm.present();
   }
 
   openPage(page) {
