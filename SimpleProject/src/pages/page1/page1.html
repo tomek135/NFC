@@ -8,18 +8,17 @@
     <ion-title> Wyślij Wiadomość</ion-title>
   </ion-navbar>
 </ion-header>
-  <ion-content ngInit="sendMessage()">
+  <ion-content>
         <h3> Aby wysłać wiadomość wybierz przycisk Wyślij.</h3>
         <h5> Wiadomość</h5>
       <label class="item item-input" name="textArea">
         <textarea [(ngModel)]= "testProvider.message" placeholder="Napisz wiadomość...">{{testProvider.message}}</textarea>
         <div contenteditable="true" ></div>
       </label>
-      <div class="button">
-    <button color="button" ion-button (click) = "listenNFC()">Wyślij</button>
-    <button color="button" ion-button (click) = "selectTemplate()">Szablony</button>
-
-      </div>
+      <div class ="buttons">
+      <button color="button" ion-button (click) = "sendMessage()">Wyślij</button>
+      <button color="button" ion-button (click) = "selectTemplate()">Szablony</button>
+    </div>
       <!--
       <ion-item class="info">
         <ion-label fixed> Adres Serwera: </ion-label>
