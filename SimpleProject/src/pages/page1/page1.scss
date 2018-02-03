@@ -31,8 +31,11 @@ textarea{
   font-weight: 400;
   opacity: 0.87;
 }
+.buttons{
+  padding: 16px;
+}
 
-.button{
+button{
   margin-top:  $button-md-margin-top;
   margin-block-end:  $button-md-margin-end;
   margin-bottom:  $button-md-margin-bottom;
@@ -100,7 +103,7 @@ ion-label[fixed] {
       max-width: 359px;
     }
 
-    .button{
+    button{
       padding-left: $button-md-small-padding-start;
       padding-right: $button-md-small-padding-end	;
       padding-top: $button-md-small-padding-top	;
@@ -128,7 +131,7 @@ ion-label[fixed] {
       min-height: 150px;
       max-width: 575px;
     }
-    .button{
+    button{
       padding-left: $button-md-small-padding-start;
       padding-right: $button-md-small-padding-end	;
       padding-top: $button-md-small-padding-top	;
@@ -157,7 +160,7 @@ ion-label[fixed] {
     font-size: 20px;
   }
 
-  .button{
+  button{
     padding-left: $button-md-padding-start;
     padding-right: $button-md-padding-end	;
     padding-top: $button-md-padding-top	;
@@ -186,7 +189,7 @@ ion-label[fixed] {
     font-size: 22px;
   }
 
-  .button{
+  button{
     padding-left: $button-md-padding-start;
     padding-right: $button-md-padding-end	;
     padding-top: $button-md-padding-top	;
@@ -217,7 +220,7 @@ ion-label[fixed] {
     font-size: 24px;
   }
 
-  .button{
+  button{
     padding-left: $button-md-padding-start;
     padding-right: $button-md-padding-end	;
     padding-top: $button-md-padding-top	;
@@ -246,7 +249,7 @@ ion-label[fixed] {
     font-size: 26px;
   }
 
-  .button{
+  button{
     padding-left: $button-md-large-padding-start;
     padding-right: $button-md-large-padding-end	;
     padding-top: $button-md-large-padding-top	;
